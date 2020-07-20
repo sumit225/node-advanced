@@ -28,9 +28,9 @@ const createUser = (req, res, next) => {
 }
 
 const getUser = async(req, res, next) => {
-    const userId = req.query;
+    const userId = req.USER_DETAIL;
 
-    if (!userId.id) {
+    if (!userId._id) {
         return error.USER_ID_REQUIRED;
     }
 
@@ -42,8 +42,21 @@ const getUser = async(req, res, next) => {
     }
 }
 
-const updateUser = (req, res, next) => {
+const updateUser = async (req, res, next) => {
+    const userId = req.USER_DETAIL;
+    if (!userId._id) return error.USER_ID_REQUIRED
 
+    const data = {};
+    if (req.body.name) {
+        data.name = req.body.name;
+    }
+    if (req.body.email) {
+        data.email = req.body.email;
+    }
+    data._id = userId._id;
+
+    const userData = await userService.updateUser(data);
+    return userData;
 }
 
 const loginUser = async(req, res, next) => {

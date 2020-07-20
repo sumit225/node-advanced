@@ -34,28 +34,43 @@ const createUser = async(userdata) => {
     });
 };
 
-const getUser = async({id}) => {
+const getUser = async({_id}) => {
     try {
-        const users = await userDao.getUser(id);
+        const users = await userDao.getUser(_id);
         return users;
     } catch (e) {
         return e;
     }
 }
 
+const updateUser = async(userData) => {
+    const userId = userData._id;
+    delete userData._id;
+    const updateUserData = await userDao.updateUser(userId, userData);
+    return updateUserData;
+
+}
+
 const loginUser = async ({email, password}) => {
     const user = await userDao.loginUser(email);
-
-    if (!user) throw new Error (error.USER_NOT_FOUND);
-    // compare password
+    if (!user) return utils.throwError(error.USER_NOT_FOUND);
     const userPassword = await utils.comparePassword(password, user.password);
-    if (!userPassword) throw new Error (error.MISMATCH_PASSWORD);
-    // if (!user) return await utils.throwError('User not found.')
+    if (!userPassword) return utils.throwError(error.MISMATCH_PASSWORD);
+    const token = utils.generateAccessToken(user);
+    const session = {
+        accessToken: token,
+        userId: user._id,
+        isDelete: false
+    };
+    const sessionData = await sessionDao.createSession(session);
+    user.accessToken = sessionData.accessToken;
+    delete user.password;
     return user;
 }
 
 module.exports = {
     createUser,
     getUser,
-    loginUser
+    loginUser,
+    updateUser
 }

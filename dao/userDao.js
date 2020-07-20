@@ -16,7 +16,7 @@ const createUser = (userData) => {
 
 const getUser = async(id) => {
     try {
-        const user = await User.find({});
+        const user = await User.findOne({_id: id}, {password: 0}, {lean: true});
         return user;
     } catch (e) {
         return e;
@@ -25,15 +25,21 @@ const getUser = async(id) => {
 
 const loginUser = async(email) => {
     try {
-        const userData = await User.findOne({email: email});
+        const userData = await User.findOne({email: email}, {}, {lean: true});
         return userData;
     } catch (e) {
         return e;
     }
 }
 
+const updateUser = async(_id, data) => {
+    const userData = User.findOneAndUpdate({_id}, {$set: data}, {runValidators: true,new: true});
+    return userData;
+}
+
 module.exports = { 
     createUser,
     getUser,
-    loginUser
+    loginUser,
+    updateUser
 };

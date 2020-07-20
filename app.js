@@ -14,7 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Router configuration
-const {userRoute} = require('./routers/index');
+const {userRoute, blogRoute} = require('./routers/index');
 
 // Connect mongodb
 mongoose.connect(process.env.MONGO_URI, { 
@@ -40,6 +40,7 @@ mongoose.connection.on('error', (err) => {
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(userRoute);
+app.use(blogRoute);
 
 app.listen(PORT, () => {
     console.log(chalk.green(`Node starter kit is running on ${PORT}`));

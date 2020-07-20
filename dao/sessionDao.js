@@ -14,6 +14,12 @@ const createSession = (data) => {
     })
 }
 
+const getSession = async (token) => {
+    const userSession = await Session.findOne({accessToken: token});
+    return userSession;
+}
+
 module.exports = {
-    createSession
+    createSession,
+    getSession
 }

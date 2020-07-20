@@ -1,5 +1,6 @@
 "use strict";
 
 module.exports = {
-    userRoute: require('./users')
+    userRoute: require('./users'),
+    blogRoute: require('./blogs')
 }

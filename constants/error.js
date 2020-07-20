@@ -23,7 +23,8 @@ module.exports = {
     },
     EMAIL_REQUIRED: {
         code: 400,
-        message: 'Email is required'
+        message: 'Email is required',
+        status: 'error'
     },
     USER_ID_REQUIRED: {
         code: 400,
@@ -43,6 +44,26 @@ module.exports = {
     NAME_REQUIRED: {
         code: 400,
         message: 'Name is required.',
+        status: 'error'
+    },
+    GENERIC_ERROR: {
+        code: 400,
+        message: '',
+        status: 'error'
+    },
+    BLOG_REQUIRED: {
+        code: 400, 
+        message: 'Blog is required.', 
+        status: 'error'
+    },
+    BLOG_ID_REQUIRED: {
+        code: 400, 
+        message: 'Blog id is required.', 
+        status: 'error'
+    },
+    BLOG_TITLE_REQUIRED: {
+        code: 400, 
+        message: 'Blog title is required.', 
         status: 'error'
     }
 }
