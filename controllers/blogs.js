@@ -4,7 +4,7 @@ const {createBlogService, getBlogService, updateBlogService} = require('../servi
 const utils = require('../utils/utils');
 const errorConstants = require('../constants/error');
 
-const createBlog = async(req, res, next) => {
+const createBlog = async(req, res) => {
     const data = {};
     const userId = req.USER_DETAIL;
 

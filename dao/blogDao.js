@@ -9,7 +9,9 @@ const createBlog = async(blogData) => {
 }
 
 const getBlogs = async(userId) => {
-    const blogs = await Blog.find({userId}, {}, {lean: true});
+    const blogs = await Blog
+    .find({userId}, {}, {lean: true})
+    .cache({key: userId.toString()});
     return blogs;
 }
 

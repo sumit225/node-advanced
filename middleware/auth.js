@@ -14,6 +14,7 @@ module.exports = async (req, res, next) => {
         req.USER_DETAIL = userDetails;
         return next();
     } catch(e) {
+        console.log(e)
         return res.status(401).send('Authentication is not valid.')
     }
 }

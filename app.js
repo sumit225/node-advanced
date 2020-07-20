@@ -6,6 +6,7 @@ const path = require('path');
 const chalk = require('chalk');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cache = require('./services/cache');
 
 // setup env configuration here
 dotenv.config();

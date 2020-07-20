@@ -6,20 +6,20 @@ const success = require('../constants/success');
 const auth = require('../middleware/auth');
 const {createBlog, getBlog, updateBlog} = require('../controllers/blogs');
 const constant = require('../constants/constant');
-console.log(constant)
+const cleanCache = require('../middleware/cleanCache')
 
-router.post('/blogs', auth, async(req, res, next) => {
+router.post('/blogs', auth, cleanCache, async(req, res) => {
     const callback = (data) => {
         if (data && data.status === constant.ERROR) return res.status(data.code).send(data)
         if (data && data.status === constant.SUCCESS) return res.status(data.code).send(data)
         return res.status(500).send(errorConstant.INTERAL_SERVER_ERROR);
     }
     try {
-        const blogs = await createBlog(req, res, next);
-        return callback(success.create(blogs));
+        const blogs = await createBlog(req, res);
+        callback(success.create(blogs));
     } catch (e) {
         console.log("error  : ", e)
-        return callback(e.message)
+        callback(e.message)
     }
 })
 
